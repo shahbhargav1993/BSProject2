@@ -1,6 +1,6 @@
 package org.example.Service;
 
-import org.example.Model.Product;
+import org.example.DAO.SellerDAO;
 import org.example.Model.Seller;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class SellerService {
 
     /** constructor to initialize the sellerList as an ArrayList */
 
-    public  SellerService () {
+    public  SellerService (SellerDAO sellerDAO) {
         this.sellerList = new ArrayList<>();
     }
 

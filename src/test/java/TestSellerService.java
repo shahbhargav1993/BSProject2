@@ -1,18 +1,26 @@
+import org.example.DAO.SellerDAO;
 import org.example.Model.Seller;
 import org.example.Service.SellerService;
+import org.example.Util.ConnectionSingleton;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class TestSellerService {
     SellerService sellerService;
+    SellerDAO sellerDAO;
 
 
     @Before
     public void setUp(){
-        sellerService = new SellerService();
+        Connection conn= ConnectionSingleton.getConnection();
+        sellerDAO = new SellerDAO(conn);
+        sellerService = new SellerService(sellerDAO);
+
+
     }
 
     @Test

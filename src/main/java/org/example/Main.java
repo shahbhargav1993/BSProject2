@@ -2,26 +2,29 @@ package org.example;
 
 import io.javalin.Javalin;
 import org.example.Controller.StoreController;
+import org.example.DAO.ProductDAO;
+import org.example.DAO.SellerDAO;
 import org.example.Service.ProductService;
 import org.example.Service.SellerService;
+import org.example.Util.ConnectionSingleton;
+
+import java.sql.Connection;
 
 
 public class Main {
     public static void main(String[] args) {
-        // Initialize services
-        ProductService productService = new ProductService();
-        SellerService sellerService = new SellerService();
+        Connection conn = ConnectionSingleton.getConnection();
+        SellerDAO sellerDAO = new SellerDAO(conn);
+        ProductDAO productDAO = new ProductDAO(conn);
+        SellerService sellerService = new SellerService(sellerDAO);
+        ProductService productService = new ProductService(productDAO);
+        StoreController storeController = new StoreController(productService,sellerService);
 
-        // Initialize controller
-        StoreController storeController = new StoreController(productService, sellerService);
+        Javalin api = storeController.getAPI();
 
-        // Setup Javalin
-        Javalin app = storeController.getAPI();
+        api.start(9001);
 
-        // Start the server
-        app.start(9004); // You can specify the port number here
 
-        // Display message indicating that the server has started
-        System.out.println("Server started at http://localhost:9004/");
+
     }
 }

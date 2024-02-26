@@ -1,7 +1,11 @@
 import org.example.Model.Product;
 import org.example.Service.ProductService;
+import org.example.Util.ConnectionSingleton;
 import org.junit.Before;
 import org.junit.Test;
+import java.sql.Connection;
+import org.example.DAO.ProductDAO;
+
 
 import java.util.List;
 import static org.junit.Assert.*;
@@ -10,10 +14,13 @@ import static org.junit.Assert.*;
 
 public class TestProductService {
     ProductService productService;
+    ProductDAO productDAO;
 
     @Before
     public void setup() {
-        productService = new ProductService();
+        Connection conn = ConnectionSingleton.getConnection();
+        productDAO = new ProductDAO(conn);
+        productService = new ProductService(productDAO);
     }
 
     @Test

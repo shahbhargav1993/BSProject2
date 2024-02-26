@@ -27,6 +27,9 @@ public class StoreController {
 
         api.get("health", context -> {context.result("Server is UP");});
 
+
+
+
         /** GET endpoint retrieves all products using product servie , convert list into json and sends it as Response. same for seller as well*/
         api.get("products", context -> {
             List<Product> productList = productService.getProductsList();
@@ -94,6 +97,40 @@ public class StoreController {
                 }
 
         );
+
+        // Endpoint to update a product
+        api.put("products/{id}", context -> {
+            String id = context.pathParam("id");
+            try {
+                ObjectMapper om = new ObjectMapper();
+                Product productToUpdate = om.readValue(context.body(), Product.class);
+                productService.updateProduct(id,productToUpdate.getProductName(),productToUpdate.getPrice(),productToUpdate.getSellerName());
+                context.status(200).result("Product updated successfully");
+            } catch (JsonProcessingException e) {
+                context.status(400).result("Error Processing JSON data: " + e.getMessage());
+            } catch (Exception e) { // Catching generic exception if update fails
+                context.status(500).result("Internal Server Error: " + e.getMessage());
+            }
+        });
+
+        // Endpoint to delete a product
+        api.delete("products/{id}", context -> {
+            String id = context.pathParam("id");
+            try {
+                Product productToDelete = productService.getProductById(id);
+                if (productToDelete != null) {
+                    productService.DELETEProduct(productToDelete);
+                    context.status(200).result("Product deleted successfully");
+                } else {
+                    context.status(404).result("Product not found");
+                }
+            } catch (Exception e) { // Catching generic exception if delete fails
+                context.status(500).result("Internal Server Error: " + e.getMessage());
+            }
+        });
+
+
+
 
         return api;
     }

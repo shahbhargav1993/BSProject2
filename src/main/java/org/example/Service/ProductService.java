@@ -1,7 +1,7 @@
 package org.example.Service;
 
+import org.example.DAO.ProductDAO;
 import org.example.Model.Product;
-import org.example.Model.Seller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ProductService {
     }
 
    /** constructor */
-    public ProductService(){
+    public ProductService(ProductDAO productDAO){
         this.productList = new ArrayList<>();
    }
 
@@ -50,8 +50,8 @@ public class ProductService {
 
 
    /** delete the product from the list */
-   public void DELETEProduct(Product p){
-       productList.remove(p);
+   public void DELETEProduct(Product product){
+       productList.remove(product);
    }
 
    /** below code -> for loop iteration | we first iterate through the productList using forloop. For each product in the list, we check
@@ -59,18 +59,18 @@ public class ProductService {
     * provided by the product class.
     * loop will start from index 0 and continue run until it reachs the end of the list (productList.size())
     * */
-    public void updateProduct(String productID, String productName, int price, String sellerName,Product updatedProduct){
+    public void updateProduct(String productID, String productName, int price, String sellerName){
         for(int i = 0; i < productList.size(); i++){
             Product product = productList.get(i);
             /** check if the product ID matches the provided ID */
             if (product.getProductID().equals(productID)) {
                 /** update the product variables */
-                updatedProduct.setProductName(productName);
-                updatedProduct.setPrice(price);
-                updatedProduct.setSellerName(sellerName);
+                product.setProductName(productName);
+                product.setPrice(price);
+                product.setSellerName(sellerName);
 
                 /** Replcae the product in the list with the updated product */
-                productList.set(i,updatedProduct);
+                productList.set(i,product);
                 break;
             }
 
