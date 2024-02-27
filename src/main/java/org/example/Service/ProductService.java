@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService {
+    ProductDAO productDAO;
    /** retrieve all products
     *  list to store  product record
     *  List is an interface that represent an ordered collection of elements. It allows duplicates element and provide
@@ -18,40 +19,37 @@ public class ProductService {
     * getProductList()- this method is used to retrieve the list of products. It return the productList variable.
     * ProductService() constructor- this is the constructor
     * */
-   List<Product> productList;
+
    public List<Product> getProductsList()
     {
-    return productList;
+    return productDAO.getAllProduct();
     }
+
 
    /** constructor */
     public ProductService(ProductDAO productDAO){
-        this.productList = new ArrayList<>();
+        this.productDAO = productDAO;
    }
 
    /** addProduct(Product p) - it is method to add new product to the productList.It takes Product as a object
     * as a parameter and adds it to the list using the add() method of arrayList.*/
 
    public void addProduct(Product p){
-       productList.add(p);
+       productDAO.insertProduct(p);
    }
 
    /** get ID */
 
    public Product getProductById(String productid) {
-       for (Product product : productList) {
-           if (product.getProductID().equals(productid))
-           {
-               return product;
+
+               return productDAO.getProductID(productid);
            }
-       }
-       return null; // Product with the specified ID not found
-   }
+
 
 
    /** delete the product from the list */
    public void DELETEProduct(Product product){
-       productList.remove(product);
+       productDAO.DELETEProduct(product);
    }
 
    /** below code -> for loop iteration | we first iterate through the productList using forloop. For each product in the list, we check
@@ -60,18 +58,20 @@ public class ProductService {
     * loop will start from index 0 and continue run until it reachs the end of the list (productList.size())
     * */
     public void updateProduct(String productID, String productName, int price, String sellerName){
-        for(int i = 0; i < productList.size(); i++){
-            Product product = productList.get(i);
+        //for(int i = 0; i < productList.size(); i++){
+            Product product = productDAO.getProductID(productID);
             /** check if the product ID matches the provided ID */
+
+            //Product product = new Product(productID, productName,price, sellerName);
+
             if (product.getProductID().equals(productID)) {
                 /** update the product variables */
                 product.setProductName(productName);
                 product.setPrice(price);
                 product.setSellerName(sellerName);
+                productDAO.updateProduct(product);
 
-                /** Replcae the product in the list with the updated product */
-                productList.set(i,product);
-                break;
+
             }
 
         }
@@ -79,5 +79,5 @@ public class ProductService {
 
 
 
-}
+
 

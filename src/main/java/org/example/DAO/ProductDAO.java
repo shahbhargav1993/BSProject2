@@ -57,15 +57,41 @@ public class ProductDAO {
     }
 
 
-    public void insertProduct(Product p){
-        try{
+    public void insertProduct(Product p) {
+        try {
             PreparedStatement ps = conn.prepareStatement("insert into PRODUCT" + "(product_id,product_name,price_item,seller_name)" + "values(?,?,?,?)");
             ps.setString(1, p.getProductID());
-            ps.setString(2,p.getProductName());
-            ps.setInt(3,p.getPrice());
-            ps.setString(4,p.getSellerName());
+            ps.setString(2, p.getProductName());
+            ps.setInt(3, p.getPrice());
+            ps.setString(4, p.getSellerName());
+            ps.executeUpdate();
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void DELETEProduct(Product p){
+        try{
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM PRODUCT WHERE product_id = ?");
+            ps.setString(1, p.getProductID());
+            ps.executeUpdate();
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateProduct(Product p) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("UPDATE PRODUCT set product_name =?,price_item =?,seller_name=? where product_id =?");
+            ps.setString(1, p.getProductName());
+            ps.setInt(2, p.getPrice());
+            ps.setString(3, p.getSellerName());
+            ps.setString(4, p.getProductID());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
