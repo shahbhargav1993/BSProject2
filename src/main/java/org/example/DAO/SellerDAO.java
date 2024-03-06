@@ -22,7 +22,7 @@ public class SellerDAO {
     public List<Seller> getAllSeller() {
         List<Seller> sellerresults = new ArrayList<>() ;
         try{
-            PreparedStatement ps = conn.prepareStatement("select * from Artist");
+            PreparedStatement ps = conn.prepareStatement("select * from SELLER");
             ResultSet resultSet = ps.executeQuery();
             while(resultSet.next()){
                 String SellerID = resultSet.getString("seller_id");
@@ -64,6 +64,7 @@ public class SellerDAO {
         try{
             PreparedStatement ps = conn.prepareStatement("UPDATE SELLER set seller_name = ? where seller_id = ?");
             ps.setString(1,s.getSellerName());
+            ps.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -72,7 +73,8 @@ public class SellerDAO {
     public static void DELETESeller(Seller s) {
         try{
             PreparedStatement ps = conn.prepareStatement("DELETE FROM SELLER WHERE seller_id = ?");
-            ps.setString(1,getSellerID());
+            ps.setString(1,s.getSellerID());
+            ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }
