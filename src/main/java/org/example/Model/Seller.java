@@ -1,7 +1,7 @@
 package org.example.Model;
 
 public class Seller {
-    private static String SellerID;
+    private  String SellerID;
     private String SellerName;
 
     public Seller() {

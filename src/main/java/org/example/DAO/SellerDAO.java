@@ -18,7 +18,7 @@ public class SellerDAO {
 
 
     public List<Seller> getAllSeller() {
-        List<Seller> sellerresults = new ArrayList<>() ;
+        List<Seller> sellerresult = new ArrayList<>() ;
         try{
             PreparedStatement ps = conn.prepareStatement("select * from SELLER");
             ResultSet resultSet = ps.executeQuery();
@@ -26,14 +26,14 @@ public class SellerDAO {
                 String SellerID = resultSet.getString("seller_id");
                 String SellerName = resultSet.getString("seller_name");
                 Seller s = new Seller(SellerID,SellerName);
-                sellerresults.add(s);
+                sellerresult.add(s);
 
 
             }
         } catch(SQLException e){
             e.printStackTrace();
         }
-        return sellerresults;
+        return sellerresult;
     }
 
     public void insertSeller(Seller s) {
@@ -42,6 +42,7 @@ public class SellerDAO {
             ps.setString(1,s.getSellerID());
             ps.setString(2,s.getSellerName());
             ps.executeUpdate();
+            System.out.println("inserting seller");
 
             /**retrieve auto generate sellerid
             ResultSet generatedKeys = ps.getGeneratedKeys();

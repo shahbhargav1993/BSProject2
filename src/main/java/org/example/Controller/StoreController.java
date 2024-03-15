@@ -146,6 +146,22 @@ public class StoreController {
             }
         });
 
+        // Endpoint to delete a seller
+        api.delete("sellers/{id}", context -> {
+            String id = context.pathParam("id");
+            try {
+                Seller sellerToDelete = sellerService.getSellerById(id);
+                if (sellerToDelete != null) {
+                    sellerService.DELETESeller(sellerToDelete);
+                    context.status(200).result("Seller deleted successfully");
+                } else {
+                    context.status(404).result("Seller not found");
+                }
+            } catch (Exception e) { // Catching generic exception if delete fails
+                context.status(500).result("Internal Server Error: " + e.getMessage());
+            }
+        });
+
 
 
 
