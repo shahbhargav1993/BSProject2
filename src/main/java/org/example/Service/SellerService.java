@@ -43,7 +43,7 @@ SellerDAO sellerDAO;
 
             Seller seller = sellerDAO.getSellerById(sellerID);
             /** check if the seller ID matches the provided ID */
-            if (Seller.getSellerID().equals(sellerID)) {
+            if (seller.getSellerID().equals(sellerID)) {
                 /** update the product variables */
                 s.setSellerID(sellerID);
                 s.setSellerName(sellerName);

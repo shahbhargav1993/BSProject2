@@ -15,7 +15,7 @@ public class Seller {
         SellerName = sellerName;
     }
 
-    public static String getSellerID() {
+    public String getSellerID() {
         return SellerID;
     }
 

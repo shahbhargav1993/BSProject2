@@ -6,8 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.Model.Seller.getSellerID;
-
 public class SellerDAO {
    /** database connection */
    static Connection conn;

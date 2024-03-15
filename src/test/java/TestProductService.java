@@ -38,7 +38,7 @@ public class TestProductService {
     public void  testGetProductById() {
         Product product = new Product("2","Butter",10,"walmart");
         productService.addProduct(product);
-        Product retrieveProduct = productService.getProductById("1");
+        Product retrieveProduct = productService.getProductById("2");
         assertNotNull(retrieveProduct);
         assertEquals(product.getProductName(),retrieveProduct.getProductName());
 
